@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مركز المراقبة — نظام إدارة وتحليل الفيديو (v18.1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- v16 #R16: خط IBM Plex Sans Arabic محلي من البرنامج نفسه (يشتغل بدون إنترنت) -->
+<style>
+  @font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/ibm-plex-sans-arabic-arabic-400-normal.woff2') format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+2010-2011, U+FB50-FDFF, U+FE70-FEFF; }
+  @font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 500; font-display: swap; src: url('/assets/fonts/ibm-plex-sans-arabic-arabic-500-normal.woff2') format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+2010-2011, U+FB50-FDFF, U+FE70-FEFF; }
+  @font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 700; font-display: swap; src: url('/assets/fonts/ibm-plex-sans-arabic-arabic-700-normal.woff2') format('woff2'); unicode-range: U+0600-06FF, U+0750-077F, U+08A0-08FF, U+200C-200E, U+2010-2011, U+FB50-FDFF, U+FE70-FEFF; }
+  @font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/ibm-plex-sans-arabic-latin-400-normal.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 500; font-display: swap; src: url('/assets/fonts/ibm-plex-sans-arabic-latin-500-normal.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'IBM Plex Sans Arabic'; font-style: normal; font-weight: 700; font-display: swap; src: url('/assets/fonts/ibm-plex-sans-arabic-latin-700-normal.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD; }
+</style>
+<link rel="stylesheet" href="/static/app.css?v={{ v }}">
+<link rel="stylesheet" href="/static/v18.css?v={{ v }}">
+</head>
+<body>
+<!-- v16 #R16: أيقونات Lucide (ISC) المستخدمة في الواجهة -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" /></symbol><symbol id="i-square" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" /></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18" /> <path d="m6 6 12 12" /></symbol><symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol><symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" /></symbol><symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" /> <circle cx="7" cy="17" r="2" /> <path d="M9 17h6" /> <circle cx="17" cy="17" r="2" /></symbol><symbol id="i-paw-print" viewBox="0 0 24 24"><circle cx="11" cy="4" r="2" /> <circle cx="18" cy="8" r="2" /> <circle cx="20" cy="16" r="2" /> <path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z" /></symbol><symbol id="i-circle-question-mark" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /> <path d="M12 17h.01" /></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" /></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="M12 6v6l4 2" /></symbol><symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /> <path d="M12 9v4" /> <path d="M12 17h.01" /></symbol><symbol id="i-chart-column" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16" /> <path d="M18 17V9" /> <path d="M13 17V5" /> <path d="M8 17v-3" /></symbol><symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5" /> <rect x="2" y="6" width="14" height="12" rx="2" /></symbol><symbol id="i-scan-eye" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2" /> <path d="M17 3h2a2 2 0 0 1 2 2v2" /> <path d="M21 17v2a2 2 0 0 1-2 2h-2" /> <path d="M7 21H5a2 2 0 0 1-2-2v-2" /> <circle cx="12" cy="12" r="1" /> <path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0" /></symbol><symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" /></symbol><symbol id="i-bell" viewBox="0 0 24 24"><path d="M10.268 21a2 2 0 0 0 3.464 0" /> <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></symbol><symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /> <path d="m9 12 2 2 4-4" /></symbol><symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4" /> <path d="M3.34 19a10 10 0 1 1 17.32 0" /></symbol><symbol id="i-cpu" viewBox="0 0 24 24"><path d="M12 20v2" /> <path d="M12 2v2" /> <path d="M17 20v2" /> <path d="M17 2v2" /> <path d="M2 12h2" /> <path d="M2 17h2" /> <path d="M2 7h2" /> <path d="M20 12h2" /> <path d="M20 17h2" /> <path d="M20 7h2" /> <path d="M7 20v2" /> <path d="M7 2v2" /> <rect x="4" y="4" width="16" height="16" rx="2" /> <rect x="8" y="8" width="8" height="8" rx="1" /></symbol><symbol id="i-timer" viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2" /> <line x1="12" x2="15" y1="14" y2="11" /> <circle cx="12" cy="14" r="8" /></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /> <path d="m16 9-5.5 5.5L8 12" /></symbol><symbol id="i-zap" viewBox="0 0 24 24"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z" /></symbol><symbol id="i-refresh-cw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /> <path d="M21 3v5h-5" /> <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /> <path d="M8 16H3v5" /></symbol><symbol id="i-film" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2" /> <path d="M7 3v18" /> <path d="M3 7.5h4" /> <path d="M3 12h18" /> <path d="M3 16.5h4" /> <path d="M17 3v18" /> <path d="M17 7.5h4" /> <path d="M17 16.5h4" /></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" /> <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" /> <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" /></symbol></svg>
+<div id="evHoverPreview" aria-hidden="true"><img alt="" /><div class="hp-cap"></div></div>
+
+<!-- الشريط العلوي المبسّط -->
+<header class="topbar">
+  <div class="topbar-right">
+    <div class="site-brand">
+      <div class="site-mark">
+        <svg class="ico ico-lg" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <span>مركز المراقبة</span>
+    </div>
+    <span class="preview-mini-tag mono">v18.1</span>
+    <span id="roiStatusBanner" class="preview-mini-tag" style="display:none; color:var(--accent-primary); border-color:var(--accent-primary);"></span>
+  </div>
+
+  <div class="topbar-left">
+    <!-- 1. مؤشر الكاميرات المتصلة -->
+    <div id="sysCombinedPill" class="sys-pill" title="حالة اتصال الكاميرات بالمسجّل">
+      <span id="sysStatusDot" class="status-dot dot-online"></span>
+      <span id="sysStatusText"><strong class="mono">0/0</strong> كاميرات</span>
+    </div>
+
+    <!-- 2. مؤشر حالة الذكاء الاصطناعي -->
+    <div id="sysAiPill" class="sys-pill" title="حالة اتصال ونشاط نموذج الذكاء الاصطناعي">
+      <span id="sysAiDot" class="status-dot dot-online"></span>
+      <span id="sysAiText">الذكاء: يعمل (<span class="mono">Gemini 3.8</span>)</span>
+    </div>
+
+    <!-- 3. مؤشر حالة ربط تيليجرام -->
+    <div id="sysTgPill" class="sys-pill" title="حالة ربط تيليجرام للإشعارات الفورية">
+      <span id="sysTgDot" class="status-dot dot-online"></span>
+      <span id="sysTgText">تيليجرام: متصل (<span class="mono">@Vivi202_bot</span>)</span>
+    </div>
+
+    <!-- أيقونة جرس عليها عدد التنبيهات -->
+    <button class="bell-btn" onclick="switchScreen('events')" title="فتح سجل الأحداث والتنبيهات" aria-label="سجل التنبيهات">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span id="bellBadgeCount" class="bell-badge">0</span>
+    </button>
+
+    <div class="divider-v"></div>
+
+    <div class="clock-box mono" id="liveClock">--:--:--</div>
+  </div>
+</header>
+<!-- v16 #R18: شريط الحماية الذاتية -->
+<div id="loadGuardBar" class="load-guard-bar" style="display:none;" role="status"></div>
+
+<!-- جسم التطبيق -->
+<div class="app-body">
+
+  <!-- الشريط الجانبي: 4 عناصر فقط + زر الطي -->
+  <aside id="navRail" class="nav-rail" aria-label="القائمة الرئيسية">
+    <div class="nav-list">
+      <button id="nav_live" class="nav-item active" onclick="switchScreen('live')" title="مباشر" aria-label="المراقبة المباشرة">
+        <svg class="ico ico-lg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+        <span class="nav-label">مباشر</span>
+      </button>
+
+      <button id="nav_events" class="nav-item" onclick="switchScreen('events')" title="الأحداث والتسجيلات" aria-label="الأحداث والتسجيلات">
+        <svg class="ico ico-lg" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="nav-label">الأحداث</span>
+      </button>
+
+      <!-- v16 #R16: شاشة الإحصائيات -->
+      <button id="nav_stats" class="nav-item" onclick="switchScreen('stats')" title="إحصائيات الأحداث" aria-label="الإحصائيات">
+        <svg class="ico ico-lg" aria-hidden="true"><use href="#i-chart-column"/></svg>
+        <span class="nav-label">الإحصائيات</span>
+      </button>
+
+      <button id="nav_devices" class="nav-item" onclick="switchScreen('devices')" title="الأجهزة" aria-label="الأجهزة">
+        <svg class="ico ico-lg" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="6" rx="1"/><rect x="2" y="14" width="20" height="6" rx="1"/><line x1="6" y1="7" x2="6.01" y2="7"/><line x1="6" y1="17" x2="6.01" y2="17"/></svg>
+        <span class="nav-label">الأجهزة</span>
+      </button>
+
+      <button id="nav_settings" class="nav-item" onclick="switchScreen('settings')" title="الإعدادات (التحليل، تليجرام، اللوحات، والنظام)" aria-label="الإعدادات">
+        <svg class="ico ico-lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        <span class="nav-label">الإعدادات</span>
+      </button>
+    </div>
+
+    <div class="nav-footer">
+      <button class="nav-item" onclick="document.getElementById('navRail').classList.toggle('collapsed')" title="طي أو توسيع الشريط الجانبي" aria-label="طي الشريط الجانبي">
+        <svg class="ico ico-lg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+        <span class="nav-footer-text">طي القائمة</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- =========================================================
+       الشاشة 1: المراقبة المباشرة (Live Monitoring View)
+       ========================================================= -->
+  <div id="view_live" class="workspace-view active">
+    <div class="live-stage">
+
+      <!-- شريط الأدوات المبسّط -->
+      <div class="stage-toolbar">
+        <div class="toolbar-group">
+          <span class="toolbar-label">الشبكة:</span>
+          <button id="gridBtn_1" class="btn-tool mono layout-btn" onclick="setGridLayout(1, this)" title="عرض كاميرا واحدة" aria-label="تخطيط 1">1</button>
+          <button id="gridBtn_4" class="btn-tool mono layout-btn active" onclick="setGridLayout(4, this)" title="عرض 4 كاميرات" aria-label="تخطيط 4">4</button>
+          <button id="gridBtn_9" class="btn-tool mono layout-btn" onclick="setGridLayout(9, this)" title="عرض 9 كاميرات" aria-label="تخطيط 9">9</button>
+          <button id="gridBtn_16" class="btn-tool mono layout-btn" onclick="setGridLayout(16, this)" title="عرض 16 كاميرا" aria-label="تخطيط 16">16</button>
+
+          <button id="gridBtn_32" class="btn-tool mono layout-btn" onclick="setGridLayout(32, this)" title="عرض شبكة 32 كاميرا" aria-label="تخطيط 32">32</button>
+          <div class="more-dropdown-wrap">
+            <button id="btnMoreGrid" class="btn-tool" onclick="toggleMoreGrid(event)" title="خيارات إضافية (32 كاميرا وتشغيل الكل)" aria-label="المزيد من تخطيطات الشبكة">
+              <span class="btn-text">المزيد</span>
+              <svg class="ico" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+            </button>
+            <div id="moreGridMenu" class="more-menu">
+              <button class="more-menu-item" onclick="setGridLayout(32, document.getElementById('btnMoreGrid'))">
+                <span>شبكة 32 كاميرا</span>
+                <span class="mono">32</span>
+              </button>
+              <button class="more-menu-item" onclick="startAllCameras()">
+                <span>تشغيل جميع الكاميرات</span>
+                <svg class="ico" aria-hidden="true"><use href="#i-play"/></svg>
+              </button>
+              <button class="more-menu-item" onclick="stopAllCameras()">
+                <span>إيقاف جميع الكاميرات</span>
+                <svg class="ico" aria-hidden="true"><use href="#i-square"/></svg>
+              </button>
+              <button class="more-menu-item" onclick="resetRoi('cam', 'all')">
+                <span>مسح المنطقة والخط</span>
+                <svg class="ico" aria-hidden="true"><use href="#i-x"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="divider-v" style="margin: 0 4px;"></div>
+
+          <span class="toolbar-label"><strong id="toolbarSelectedCam" class="mono" style="color:var(--text-primary)">CAM-01</strong>:</span>
+          <button id="drawZoneBtn" class="btn-tool" onclick="activateRoiDraw('zone')" title="رسم منطقة الكشف بالماوس فوق الكاميرا" aria-label="منطقة الكشف">
+            <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" stroke-dasharray="4 2"/></svg>
+            <span class="btn-text">منطقة الكشف</span>
+          </button>
+          <!-- v18 #R20: منطقة استبعاد (أوراق شجر/شارع/أعلام) — الأجسام داخلها تتجاهل -->
+          <button id="drawMaskBtn" class="btn-tool" onclick="activateRoiDraw('mask')" title="رسم منطقة استبعاد: أي جسم تكون قدمه داخلها يتجاهله الكشف (مثل شجرة تتحرك أو شارع عام)" aria-label="منطقة استبعاد">
+            <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9" stroke-dasharray="3 2"/><line x1="3" y1="15" x2="21" y2="15" stroke-dasharray="3 2"/></svg>
+            <span class="btn-text">استبعاد</span>
+          </button>
+          <button id="drawLineBtn" class="btn-tool" onclick="activateRoiDraw('line')" title="رسم خط العبور المتجهي بالماوس فوق الكاميرا" aria-label="خط العبور">
+            <svg class="ico" viewBox="0 0 24 24"><line x1="4" y1="20" x2="20" y2="4"/><circle cx="4" cy="20" r="2.5"/><circle cx="20" cy="4" r="2.5"/></svg>
+            <span class="btn-text">خط العبور</span>
+          </button>
+          <!-- v16 #9: زر مسح خط العبور ومنطقة المراقبة (للكاميرا المحددة أو لكل الكاميرات) -->
+          <button id="gridBtn_32" class="btn-tool mono layout-btn" onclick="setGridLayout(32, this)" title="عرض شبكة 32 كاميرا" aria-label="تخطيط 32">32</button>
+          <div class="more-dropdown-wrap">
+            <button id="clearRoiBtn" class="btn-tool" onclick="toggleRoiClearMenu(event)" title="مسح خط العبور أو منطقة المراقبة" aria-label="مسح الخطوط" aria-haspopup="true">
+              <svg class="ico" viewBox="0 0 24 24"><path d="M20 20H9l-5-5a2 2 0 0 1 0-2.8l8.2-8.2a2 2 0 0 1 2.8 0l5 5a2 2 0 0 1 0 2.8L13 19"/><line x1="7" y1="12" x2="13" y2="18"/></svg>
+              <span class="btn-text">مسح الخطوط</span>
+            </button>
+            <div id="roiClearMenu" class="more-menu" style="min-width: 250px;">
+              <button class="more-menu-item" onclick="resetRoi('cam', 'line')"><span>مسح خط العبور</span><span style="font-size:11px; color:var(--text-muted);">الكاميرا المحددة</span></button>
+              <button class="more-menu-item" onclick="resetRoi('cam', 'zone')"><span>مسح منطقة المراقبة</span><span style="font-size:11px; color:var(--text-muted);">الكاميرا المحددة</span></button>
+              <button class="more-menu-item" onclick="resetRoi('cam', 'mask')"><span>مسح مناطق الاستبعاد</span><span style="font-size:11px; color:var(--text-muted);">الكاميرا المحددة</span></button>
+              <button class="more-menu-item" onclick="resetRoi('cam', 'all')"><span>مسح الخط والمنطقة</span><span style="font-size:11px; color:var(--text-muted);">الكاميرا المحددة</span></button>
+              <button class="more-menu-item" style="color:var(--status-danger); border-top:1px solid var(--border-subtle); margin-top:4px; padding-top:8px;" onclick="resetRoi('all', 'all')"><span>مسح الخطوط من كل الكاميرات</span><span>✕</span></button>
+            </div>
+          </div>
+          <button class="btn-tool primary" onclick="analyzeFocusedCam(this)" title="تشغيل تحليل الرؤية الآن للكاميرا المحددة" aria-label="تحليل الآن">
+            <svg class="ico" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <span class="btn-text">تحليل الآن</span>
+          </button>
+        </div>
+
+        <div class="toolbar-group">
+          <!-- v18 #R25: العرض دائماً بجودة الكاميرا الكاملة؛ التحليل يشتغل بالخلفية على بثه الخاص ولا يظهر على الشاشة -->
+          <button id="btnLiveMode" class="btn-tool" style="display:none;" onclick="toggleLiveViewMode()" aria-label="وضع العرض المباشر">
+            <svg class="ico" aria-hidden="true"><use id="liveModeIcon" href="#i-video"/></svg>
+            <span class="btn-text" id="liveModeTxt">عالي الدقة</span>
+          </button>
+          <button id="btnInspectorToggle" class="btn-tool" onclick="toggleInspector()" title="إظهار أو إخفاء تفاصيل الكاميرا" aria-label="تفاصيل الكاميرا">
+            <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <span class="btn-text">تفاصيل الكاميرا</span>
+          </button>
+          <button id="btnEventsPanelToggle" class="btn-tool active" onclick="toggleEventsPanel()" title="إظهار أو إخفاء لوحة الأحداث الجانبية" aria-label="لوحة الأحداث">
+            <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+            <span class="btn-text">الأحداث</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- شبكة الكاميرات المسيطرة بصرياً على خلفية سوداء صافية -->
+      <div class="camera-grid-wrapper">
+        <div id="cameraGrid" class="camera-grid grid-layout-4"></div>
+      </div>
+
+      <!-- لوحة تفاصيل الكاميرا: مغلقة افتراضياً، وتحتوي على 4 قيم فقط (دون موديل المسجل) -->
+      <div id="inspectorDrawer" class="camera-inspector-drawer hidden">
+        <div class="inspector-head">
+          <div class="inspector-title">
+            <svg class="ico" style="color:var(--accent-primary)" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <span>تفاصيل الكاميرا المحددة: <span id="inspCamCode" class="mono">CAM-01</span> (<span id="inspCamName">--</span>)</span>
+          </div>
+          <button class="btn-tool" onclick="toggleInspector()" title="إغلاق تفاصيل الكاميرا" aria-label="إغلاق تفاصيل الكاميرا">إغلاق ✕</button>
+        </div>
+
+        <div class="inspector-metrics-row">
+          <div class="metric-cell">
+            <span class="metric-cell-label">fps (المصدر / العرض / الكشف) + الضغط</span>
+            <span id="inspFps" class="metric-cell-val mono" style="color:var(--status-online)">0 / 0 / 0 fps • 0ms</span>
+          </div>
+          <div class="metric-cell">
+            <span class="metric-cell-label">الدقة</span>
+            <span id="inspRes" class="metric-cell-val mono">--</span>
+          </div>
+          <div class="metric-cell">
+            <span class="metric-cell-label">زمن تحليل AI</span>
+            <span id="inspAi" class="metric-cell-val">بانتظار حدث</span>
+          </div>
+          <div class="metric-cell">
+            <span class="metric-cell-label">موديل الكاميرا</span>
+            <span id="inspModel" class="metric-cell-val">غير معلن</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- لوحة الأحداث الجانبية: فلتران فقط (الكل / مهم)، وبطاقات مبسطة بسطرين كحد أقصى بدون زمن التحليل -->
+    <aside id="eventsSidePanel" class="events-side-panel" aria-label="سجل الأحداث المباشر">
+      <div class="side-panel-header">
+        <div class="side-panel-title">
+          <svg class="ico" style="color:var(--accent-primary)" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span>الأحداث المباشرة</span>
+        </div>
+        <button class="icon-btn-mini" onclick="toggleEventsPanel()" title="إغلاق لوحة الأحداث" aria-label="إغلاق لوحة الأحداث"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button>
+      </div>
+
+      <div class="side-filter-strip">
+        <button id="sideChipAll" class="chip-filter active" onclick="filterSideEvents('all')">الكل (<span id="sideCountAll">0</span>)</button>
+        <button id="sideChipConfirmed" class="chip-filter" onclick="filterSideEvents('confirmed')">مؤكد (<span id="sideCountConf">0</span>)</button>
+        <button id="sideChipImp" class="chip-filter" onclick="filterSideEvents('important')">مهم (<span id="sideCountImp">0</span>)</button>
+        <!-- v16 #R16: فلترة سريعة حسب نوع الجسم -->
+        <button id="sideChipPerson" class="chip-filter" onclick="filterSideEvents('person')" title="أشخاص"><svg class="ico cat-ico cat-person" aria-hidden="true"><use href="#i-user"/></svg> <span id="sideCountPerson">0</span></button>
+        <button id="sideChipVehicle" class="chip-filter" onclick="filterSideEvents('vehicle')" title="مركبات"><svg class="ico cat-ico cat-vehicle" aria-hidden="true"><use href="#i-car"/></svg> <span id="sideCountVehicle">0</span></button>
+        <button id="sideChipAnimal" class="chip-filter" onclick="filterSideEvents('animal')" title="حيوانات"><svg class="ico cat-ico cat-animal" aria-hidden="true"><use href="#i-paw-print"/></svg> <span id="sideCountAnimal">0</span></button>
+      </div>
+
+      <div class="events-feed-list" id="sideEventsList"></div>
+    </aside>
+  </div>
+
+  <!-- =========================================================
+       الشاشة 2: شاشة الأحداث ومشغل المقاطع (Events Screen)
+       ========================================================= -->
+  <div id="view_events" class="workspace-view">
+    <div class="events-screen-layout">
+
+      <!-- الفلاتر الأربعة: الكاميرا، التاريخ، النوع، الأهمية -->
+      <div class="filter-bar-full">
+        <div class="filter-field">
+          <label for="fltCam">الكاميرا</label>
+          <select id="fltCam" onchange="renderAllEventViews()">
+            <option value="all">جميع الكاميرات</option>
+          </select>
+        </div>
+        <div class="filter-field">
+          <label for="fltDate">التاريخ</label>
+          <input id="fltDate" type="text" class="mono" placeholder="YYYY-MM-DD (الكل)" oninput="renderAllEventViews()" />
+        </div>
+        <div class="filter-field">
+          <label for="fltType">النوع</label>
+          <select id="fltType" onchange="renderAllEventViews()">
+            <option value="all">جميع الأنواع</option>
+            <option value="person">🚶 أشخاص (Person)</option>
+            <option value="vehicle">🚗 مركبات (Vehicle)</option>
+            <option value="animal">🐾 حيوانات (Animal)</option>
+            <option value="other">❔ أخرى / عام (Other)</option>
+            <option value="confirmed">✓ أحداث مؤكدة فقط</option>
+            <option value="unconfirmed">⚠ أحداث غير مؤكدة</option>
+            <option value="line">عبور خط المراقبة</option>
+            <option value="zone">دخول منطقة المضلّع</option>
+            <option value="lpr">مركبة / لوحة (ANPR)</option>
+            <option value="failed">أحداث فشل تحليلها (مقطع محفوظ)</option>
+          </select>
+        </div>
+        <div class="filter-field">
+          <label for="fltSev">الأهمية</label>
+          <select id="fltSev" onchange="renderAllEventViews()">
+            <option value="all">جميع المستويات</option>
+            <option value="high">مرتفعة</option>
+            <option value="medium">متوسطة</option>
+            <option value="normal">عادية</option>
+          </select>
+        </div>
+        <button class="btn-tool primary" style="height:30px;" onclick="renderAllEventViews()">تصفية</button>
+        <button class="btn-tool" style="height:30px; color:var(--status-danger);" onclick="clearEvents()" title="مسح سجل الأحداث" aria-label="مسح سجل الأحداث">مسح السجل</button>
+      </div>
+
+      <!-- جدول الأحداث + مشغل الحدث -->
+      <div class="events-master-detail">
+
+        <div class="table-panel">
+          <div class="panel-bar">
+            <span>سجل الأحداث المسجلة</span>
+            <span id="eventsCountLabel" style="font-size:11.5px; color:var(--text-muted);"><span class="mono">0</span> أحداث</span>
+          </div>
+
+          <!-- v16 #R16: شريط زمني لآخر 24 ساعة؛ كل علامة حدث (الأحدث يسار) -->
+          <div class="ev-timeline">
+            <div class="tl-head">
+              <span id="tlCount">آخر 24 ساعة</span>
+              <span class="tl-legend">
+                <span><i style="background:#2563EB"></i>أشخاص</span>
+                <span><i style="background:#C9A44A"></i>مركبات</span>
+                <span><i style="background:#2E7D4F"></i>حيوانات</span>
+                <span><i style="background:#A8A08C"></i>أخرى</span>
+              </span>
+            </div>
+            <div class="tl-track" id="tlTrack"></div>
+            <div class="tl-axis" id="tlAxis"></div>
+          </div>
+
+          <div class="table-scroll-box">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width:14%;">الوقت</th>
+                  <th style="width:22%;">الكاميرا</th>
+                  <th style="width:28%;">الحدث</th>
+                  <th style="width:12%;">الأهمية</th>
+                  <th style="width:11%; text-align:center;">التحليل</th>
+                  <th style="width:13%; text-align:center;">التسجيل</th>
+                </tr>
+              </thead>
+              <tbody id="eventsTableBody"></tbody>
+            </table>
+          </div>
+
+          <!-- حالة القائمة الفارغة -->
+          <div id="emptyStateBanner" class="empty-state-box">
+            <span>لا توجد أحداث مسجلة تطابق شروط البحث المحددة.</span>
+            <span class="preview-mini-tag">قائمة فارغة</span>
+          </div>
+        </div>
+
+        <!-- مشغل مقطع الحدث المبسّط -->
+        <div class="clip-player-panel">
+          <div class="panel-bar">
+            <span id="playerTitle">مشغل المقطع</span>
+            <span style="display:flex; align-items:center; gap:6px;">
+              <span id="playerTime" class="mono" style="font-size:11.5px; color:var(--text-secondary);">--:--:--</span>
+              <!-- v16 #R11: تكبير شاشة الحدث وملء الشاشة -->
+              <button id="playerExpandBtn" class="btn-tool" onclick="togglePlayerExpand(this)" title="تكبير المشغل وإخفاء الجدول" aria-label="تكبير المشغل">
+                <svg class="ico" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                <span class="btn-text">تكبير</span>
+              </button>
+              <button class="btn-tool" onclick="togglePlayerFullscreen()" title="ملء الشاشة (أو نقرتين على الفيديو)" aria-label="ملء الشاشة">
+                <svg class="ico" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                <span class="btn-text">ملء الشاشة</span>
+              </button>
+            </span>
+          </div>
+
+          <div class="player-viewport" id="playerViewport" ondblclick="togglePlayerFullscreen()" title="نقرتين لملء الشاشة">
+            <video id="playerVideoEl" playsinline preload="metadata" style="display:none; width:100%; height:100%; object-fit:contain; background:#000;"></video>
+            <img id="playerFrameImg" src="" alt="معاينة مقطع الحدث" style="display:none;" />
+            <div id="playerPlaceholder" style="color:var(--text-muted); font-size:12px;">اختر حدثاً من الجدول لتشغيل المقطع المسجل (15 ثانية)</div>
+          </div>
+
+          <div class="timeline-bar">
+            <div class="scrubber-wrap" title="الشريط الزمني للمقطع (15 ثانية)">
+              <input type="range" id="clipScrubber" class="player-scrubber" min="0" max="100" value="0" oninput="onScrubClip(this.value)" />
+              <div class="scrubber-marker" title="لحظة عبور الخط (00:05)"></div>
+            </div>
+            <div class="player-controls-row">
+              <div style="display:flex; gap:5px; align-items:center;">
+                <button id="playPauseBtn" class="btn-tool primary" onclick="toggleClipPlay()" title="تشغيل أو إيقاف المقطع" aria-label="تشغيل أو إيقاف">تشغيل / إيقاف</button>
+                <button class="btn-tool mono speed-btn" onclick="setClipSpeed(0.5, this)" title="سرعة 0.5x" aria-label="سرعة نصف">0.5x</button>
+                <button class="btn-tool mono speed-btn active" onclick="setClipSpeed(1.0, this)" title="سرعة 1x" aria-label="سرعة عادية">1x</button>
+                <button class="btn-tool mono speed-btn" onclick="setClipSpeed(2.0, this)" title="سرعة 2x" aria-label="سرعة مضاعفة">2x</button>
+              </div>
+              <span id="clipTimeLabel" class="mono" style="font-size:12px; color:var(--text-secondary);">00:00 / 00:15</span>
+              <a id="downloadMp4Btn" href="#" download class="btn-tool" style="text-decoration:none; pointer-events:none; opacity:0.5;" title="تحميل المقطع بصيغة MP4" aria-label="تحميل MP4">تحميل MP4</a>
+            </div>
+          </div>
+
+          <div class="clip-details-body">
+            <!-- شريط اللوحة المقتطعة (ANPR Crop) -->
+            <div id="playerPlateStrip" class="plate-preview-strip" style="display:none;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:11.5px; color:var(--text-muted);">اللوحة المقتطعة (ANPR):</span>
+                <img id="playerPlateImg" class="plate-crop-img" src="" alt="صورة اللوحة المقربة" />
+              </div>
+              <span id="playerPlateText" class="mono" style="font-size:15px; font-weight:700; color:var(--text-primary); letter-spacing:1px;"></span>
+            </div>
+
+            <div id="playerAiDesc" class="ai-desc-box">
+              اختر حدثاً من القائمة لعرض تحليل الذكاء الاصطناعي ومشاهدة مقطع الـ 15 ثانية.
+            </div>
+            <div class="ai-meta-footnote">
+              <span id="playerModelName">النموذج: <span class="mono">--</span></span>
+              <span id="playerLatency">زمن التحليل: <span class="mono">--</span></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       الشاشة 3: شاشة الأجهزة (Devices & NVR Separation Screen)
+       ========================================================= -->
+  <!-- =========================================================
+       v16 #R16: شاشة الإحصائيات (Chart.js محلي)
+       ========================================================= -->
+  <div id="view_stats" class="workspace-view">
+    <div class="stats-layout">
+      <div class="stats-top">
+        <strong>إحصائيات الأحداث</strong>
+        <div style="display:flex; gap:6px; align-items:center;">
+          <select id="statsDays" class="cfg-input" onchange="loadStatsView()" aria-label="فترة الإحصائيات">
+            <option value="1">آخر 24 ساعة</option>
+            <option value="7" selected>آخر 7 أيام</option>
+            <option value="30">آخر 30 يوم</option>
+          </select>
+          <button class="btn-tool" onclick="loadStatsView()" title="تحديث الإحصائيات"><svg class="ico" aria-hidden="true"><use href="#i-refresh-cw"/></svg><span class="btn-text">تحديث</span></button>
+        </div>
+      </div>
+      <div class="stats-kpis" id="statsKpis"></div>
+      <div class="stats-grid">
+        <div class="chart-card"><h4>آخر 24 ساعة حسب النوع</h4><div class="chart-box"><canvas id="chHourly"></canvas></div></div>
+        <div class="chart-card"><h4>توزيع الأنواع</h4><div class="chart-box"><canvas id="chCats"></canvas></div></div>
+        <div class="chart-card"><h4>أكثر أوقات اليوم نشاطاً</h4><div class="chart-box"><canvas id="chHourOfDay"></canvas></div></div>
+        <div class="chart-card"><h4>الأحداث لكل كاميرا</h4><div class="chart-box"><canvas id="chCams"></canvas></div></div>
+      </div>
+      <div id="statsNote" style="font-size:11.5px; color:var(--text-muted);"></div>
+    </div>
+  </div>
+
+  <div id="view_devices" class="workspace-view">
+    <div class="devices-screen-layout">
+
+      <!-- بطاقة المسجل NVR: 4 قيم فقط، والرقم التسلسلي في زر تفاصيل/Tooltip، وحالة Hik-Connect واضحة -->
+      <div class="nvr-summary-card">
+        <div class="nvr-card-header">
+          <div style="display:flex; align-items:center; gap:9px;">
+            <span id="nvrStatusDot" class="status-dot dot-online"></span>
+            <strong style="font-size:13.5px;">جهاز التسجيل الشبكي (Hikvision NVR)</strong>
+            <span id="hikCloudBadge" class="preview-mini-tag" style="color:var(--status-warning); border-color:rgba(245,158,11,0.3); cursor:pointer;" onclick="switchScreen('settings')" title="انقر لفتح إعدادات ربط سحابة Hik-Connect">Hik-Connect غير مفعّل</span>
+          </div>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <span id="nvrProbeMsg" style="font-size:11.5px; color:var(--text-muted);"></span>
+            <button id="nvrSerialBtn" class="btn-tool" onclick="toggleNvrSerial()" title="الرقم التسلسلي للمسجل وبروتوكول ISAPI" aria-label="تفاصيل المسجل والرقم التسلسلي">
+              <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <span>تفاصيل</span>
+            </button>
+            <button class="btn-tool" onclick="probeAndImportDevice()" title="فحص المسجل عبر ISAPI واستيراد القنوات" aria-label="فحص ISAPI">فحص ISAPI</button>
+            <button class="btn-tool primary" onclick="openCameraEditDrawer()" title="إضافة كاميرا جديدة أو تعديل الكاميرا المحددة" aria-label="إضافة أو تعديل كاميرا">+ إضافة / تعديل كاميرا</button>
+          </div>
+        </div>
+
+        <div class="nvr-specs-grid">
+          <div class="spec-box">
+            <div class="spec-box-lbl">الموديل</div>
+            <div id="nvrModelVal" class="spec-box-val">غير مفحوص</div>
+          </div>
+          <div class="spec-box">
+            <div class="spec-box-lbl">التحديث</div>
+            <div id="nvrFwVal" class="spec-box-val mono">--</div>
+          </div>
+          <div class="spec-box">
+            <div class="spec-box-lbl">عنوان IP</div>
+            <div id="nvrIpVal" class="spec-box-val mono">192.168.8.7</div>
+          </div>
+          <div class="spec-box">
+            <div class="spec-box-lbl">القنوات</div>
+            <div id="nvrChannelsVal" class="spec-box-val"><span class="mono">0/0</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- نموذج إضافة/تعديل الكاميرا (يُفتح عند الطلب فقط في شاشة الأجهزة) -->
+      <div id="camEditDrawer" class="cam-edit-drawer">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong style="font-size:12.5px; color:var(--accent-primary);">إعدادات اتصال الكاميرا / المسجل (محفوظة بأمان)</strong>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-tool" onclick="addNewCameraSlot()">+ خانة كاميرا جديدة (حتى 32)</button>
+            <button class="btn-tool" onclick="document.getElementById('camEditDrawer').classList.remove('open')">إغلاق ✕</button>
+          </div>
+        </div>
+        <div class="cam-form-grid">
+          <div class="filter-field">
+            <label>رقم الكاميرا (1-32)</label>
+            <input type="number" id="edit_cam_id" class="mono" min="1" max="32" value="1" onchange="selectCameraForEdit(this.value)" />
+          </div>
+          <div class="filter-field">
+            <label>اسم الكاميرا</label>
+            <input type="text" id="cam_name" value="كاميرا 1" />
+          </div>
+          <div class="filter-field">
+            <label>عنوان IP</label>
+            <input type="text" id="cam_ip" class="mono" value="192.168.8.7" />
+          </div>
+          <div class="filter-field">
+            <label>القناة (Channel)</label>
+            <input type="text" id="cam_channel" class="mono" value="1" />
+          </div>
+          <div class="filter-field">
+            <label>اسم المستخدم</label>
+            <input type="text" id="cam_username" class="mono" value="admin" />
+          </div>
+          <div class="filter-field">
+            <label>كلمة المرور</label>
+            <input type="password" id="cam_password" class="mono" placeholder="••••••" />
+          </div>
+          <div class="filter-field">
+            <label>منفذ HTTP (ISAPI)</label>
+            <input type="text" id="cam_http_port" class="mono" value="80" />
+          </div>
+          <div class="filter-field">
+            <label>نوع الاتصال</label>
+            <select id="cam_conn_type">
+              <option value="hikvision_nvr">Hikvision NVR / IPC</option>
+              <option value="custom_rtsp">مسار RTSP مخصص</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label>جودة البث</label>
+            <select id="cam_stream_type">
+              <option value="main">البث الرئيسي الكامل (Main Stream)</option>
+              <option value="sub">البث الفرعي (Sub Stream)</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label>تحليل الرؤية التلقائي</label>
+            <select id="cam_ai_watch">
+              <option value="true">مفعّل</option>
+              <option value="false">معطّل</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label>تصوير اللوحات (ANPR)</label>
+            <select id="cam_lpr_enabled">
+              <option value="true">مفعّل (قص اللوحة + إشعار)</option>
+              <option value="false">معطّل</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label title="العرض والتسجيل وصورة الحدث دائماً بجودة الكاميرا الكاملة. هذا الخيار يحدد فقط البث اللي يحلله YOLO">دقة الكشف (YOLO)</label>
+            <select id="cam_detect_quality">
+              <option value="third">عالي — البث الثالث 1080p (المستحسن للكشف واللوحات)</option>
+              <option value="main">كامل — البث الرئيسي الكامل 4K (دقة كشف 1280)</option>
+              <option value="sub">عادي — البث الفرعي 640×360 (الأخف على المعالج)</option>
+            </select>
+            <div id="cam_detect_quality_note" style="font-size:11px; color:var(--text-muted); line-height:1.5; padding-top:3px;">
+              العرض المباشر والتسجيل وصور اللوحات تعمل دائماً من البث الرئيسي الكامل 4K. هذا الخيار يحدد فقط البث الذي يفحصه YOLO.
+            </div>
+          </div>
+          <div class="filter-field">
+            <label>اتجاه عبور الخط (line_direction)</label>
+            <select id="cam_line_direction">
+              <option value="both">الاثنين (A↔B)</option>
+              <option value="A_to_B">من A إلى B فقط (A→B)</option>
+              <option value="B_to_A">من B إلى A فقط (B→A)</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label>بقاء المضلّع (ث) / التهدئة (ث)</label>
+            <div style="display:flex; gap:4px;">
+              <input type="number" id="cam_zone_dwell_sec" class="mono" step="0.5" min="0.5" max="30" value="1.0" style="width:50%;" title="زمن البقاء داخل المضلّع بالثواني" />
+              <input type="number" id="cam_cooldown_seconds" class="mono" min="2" max="300" value="12" style="width:50%;" title="مهلة التهدئة للكاميرا بالثواني" />
+            </div>
+          </div>
+          <div class="filter-field">
+            <label title="عدد الإطارات اللي يحللها YOLO في الثانية لهذه الكاميرا. لا يؤثر على البث المباشر ولا التسجيل. فارغ = الإعداد العام">إطارات التحليل في الثانية (detect_fps)</label>
+            <input type="number" id="cam_detect_fps" class="mono" min="1" max="25" step="1" placeholder="عام" />
+          </div>
+          <div class="filter-field">
+            <label>مصدر قدح الأحداث (trigger_source)</label>
+            <select id="cam_trigger_source">
+              <option value="local">الكاشف المحلي فقط (local)</option>
+              <option value="camera">أحداث الكاميرا ISAPI (camera)</option>
+              <option value="both">الاثنان معاً (both)</option>
+            </select>
+          </div>
+          <div class="filter-field">
+            <label>جدول التفعيل (schedule)</label>
+            <input type="text" id="cam_schedule" class="mono" value="always" placeholder="always أو 22:00-06:00" />
+          </div>
+          <div class="filter-field">
+            <label>الحد الأدنى للثقة: <span id="cam_min_conf_lbl" class="mono">0.45</span></label>
+            <input type="range" id="cam_min_confidence" min="0.15" max="0.95" step="0.05" value="0.45" oninput="document.getElementById('cam_min_conf_lbl').textContent=Number(this.value).toFixed(2)" />
+          </div>
+          <!-- v18 #R20: فلاتر الإنذارات الكاذبة -->
+          <div class="filter-field">
+            <label title="وسيط ثقة الكاشف عبر آخر إطارات تتبع الجسم. الجسم الحقيقي يثبت فوقها، وأوراق الشجر تطلع إطار واحد بثقة واطية">ثقة الإنذار (وسيط المسار): <span id="cam_alert_thr_lbl" class="mono">0.60</span></label>
+            <input type="range" id="cam_alert_threshold" min="0.3" max="0.9" step="0.05" value="0.6" oninput="document.getElementById('cam_alert_thr_lbl').textContent=Number(this.value).toFixed(2)" />
+          </div>
+          <div class="filter-field">
+            <label title="الأجسام الأقصر من هذي النسبة من ارتفاع الصورة تتجاهل (بعيدة جداً أو مو أجسام)">أقل ارتفاع للجسم (% من الصورة)</label>
+            <input type="number" id="cam_min_box_height_pct" class="mono" min="0" max="50" step="1" value="8" />
+          </div>
+          <div class="filter-field">
+            <label>تحقق الـ AI البصري (ai_verify)</label>
+            <select id="cam_ai_verify">
+              <option value="true">مفعّل (صورتان + JSON)</option>
+              <option value="false">معطّل (اعتماد الكاشف المحلي)</option>
+            </select>
+          </div>
+          <div class="filter-field" style="grid-column: span 2;">
+            <label>أنواع الرصد (detect_classes) / أنواع التنبيه (alert_classes)</label>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; font-size:11.5px; padding-top:4px;">
+              <label><input type="checkbox" id="det_cls_person" checked /> رصد 🚶 شخص</label>
+              <label><input type="checkbox" id="det_cls_vehicle" checked /> رصد 🚗 مركبة</label>
+              <label><input type="checkbox" id="det_cls_animal" checked /> رصد 🐾 حيوان</label>
+              <label><input type="checkbox" id="det_cls_other" checked /> رصد ❔ أخرى</label>
+              <span style="color:var(--border-strong);">|</span>
+              <label style="color:var(--accent-primary);"><input type="checkbox" id="alt_cls_person" checked /> تنبيه 🚶</label>
+              <label style="color:var(--accent-primary);"><input type="checkbox" id="alt_cls_vehicle" checked /> تنبيه 🚗</label>
+              <label style="color:var(--accent-primary);"><input type="checkbox" id="alt_cls_animal" /> تنبيه 🐾</label>
+              <label style="color:var(--accent-primary);"><input type="checkbox" id="alt_cls_other" /> تنبيه ❔</label>
+            </div>
+          </div>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-tool primary" style="flex:1; height:30px;" onclick="saveCurrentCamera()">حفظ وتشغيل</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- جدول الكاميرات: 6 أعمدة بارتفاع صفوف موحد، والموديل تحته التحديث بخط صغير، وحذف عمود العنوان/المسار -->
+      <div class="table-panel" style="flex:1;">
+        <div class="panel-bar">
+          <span>قائمة الكاميرات المتصلة (<span id="devicesCamCount" class="mono">0</span> / 32)</span>
+          <span style="font-size:11.5px; color:var(--text-muted);">فصل صريح بين موديل كل كاميرا وموديل المسجل</span>
+        </div>
+
+        <div class="table-scroll-box">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width:9%;">القناة</th>
+                <th style="width:23%;">الاسم</th>
+                <th style="width:12%;">الحالة</th>
+                <th style="width:22%;">الموديل</th>
+                <th style="width:16%;">الدقة وfps</th>
+                <th style="width:18%;">الكشف المفعّل</th>
+              </tr>
+            </thead>
+            <tbody id="devicesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================
+       الشاشة 4: الإعدادات المدمجة (التحليل، تليجرام، تصوير اللوحات، Hik-Connect)
+       ========================================================= -->
+  <div id="view_settings" class="workspace-view">
+    <div class="settings-screen-layout">
+
+      <!-- بطاقة 1: إشعارات تليجرام الفورية (Telegram Alerts) -->
+      <div class="settings-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:8px;">
+          <h3 style="border:none; padding:0; display:flex; align-items:center; gap:7px;">
+            <svg class="ico" style="color:var(--accent-primary);" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span>إشعارات تليجرام الفورية (Telegram Bot)</span>
+          </h3>
+          <span class="tile-state-tag tag-online" id="tgStatusBadge">مربوط بالباك إند</span>
+        </div>
+
+        <div class="setting-row" style="flex-direction:column; align-items:flex-start; gap:5px;">
+          <label for="telegram_bot_token" style="font-size:11px; color:var(--text-muted);">رمز البوت (Bot Token):</label>
+          <input type="password" id="telegram_bot_token" class="cfg-input mono" placeholder="أدخل Bot Token من @BotFather..." />
+        </div>
+
+        <div class="setting-row" style="flex-direction:column; align-items:flex-start; gap:5px;">
+          <label for="telegram_chat_id" style="font-size:11px; color:var(--text-muted);">معرّف المحادثة أو القناة (Chat ID):</label>
+          <input type="text" id="telegram_chat_id" class="cfg-input mono" placeholder="مثال: -1001928471920 أو رقم حسابك" />
+        </div>
+
+        <div class="setting-row">
+          <span>إرسال صورة الحدث الكاملة + صورة اللوحة المقربة تلقائياً</span>
+          <span class="tile-state-tag tag-online">مفعّل</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-top:6px; gap:8px;">
+          <span id="tgTestResult" style="font-size:11px; color:var(--text-muted);">يرسل صورة الحدث الفورية وملخص AI لتليجرام</span>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-tool" onclick="saveGlobalConfig(true)">حفظ</button>
+            <button class="btn-tool primary" onclick="testTelegramAlertLive(this)" title="إرسال رسالة فحص فعلية لتليجرام" aria-label="فحص إشعار تليجرام">إرسال إشعار تجريبي ✉</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- بطاقة 2: رصد وتصوير اللوحات (ANPR / License Plate Capture) -->
+      <div class="settings-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:8px;">
+          <h3 style="border:none; padding:0; display:flex; align-items:center; gap:7px;">
+            <svg class="ico" style="color:var(--status-warning);" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="7" cy="12" r="1.5"/><line x1="11" y1="10" x2="17" y2="10"/><line x1="11" y1="14" x2="15" y2="14"/></svg>
+            <span>رصد وتصوير لوحات المركبات (ANPR Auto-Crop)</span>
+          </h3>
+          <span class="preview-mini-tag" style="color:var(--status-online); border-color:rgba(16,185,129,0.3);">LANCZOS4 3x Zoom</span>
+        </div>
+
+        <div class="setting-row">
+          <span>مسار حفظ صور اللوحات المقربة</span>
+          <span class="mono" style="color:var(--accent-primary);">cctv_agent_data/plates/</span>
+        </div>
+
+        <div id="anprCamerasQuickList" style="display:flex; flex-direction:column; gap:4px; max-height:145px; overflow-y:auto;"></div>
+
+        <div style="padding-top:4px; font-size:11px; color:var(--text-muted); line-height:1.4;">
+          * فعّل قراءة اللوحات لكل كاميرا. يحاول النظام استخراج صورة التسجيل أولاً؛ إذا تعذرت يعرض مصدر الصورة الاحتياطية بوضوح. تُرسل القصّة مع التنبيه إذا كانت جاهزة. الأرقام الجزئية واقتراحات نموذج الرؤية تحتاج مراجعة ولا تُعامل كقراءة مؤكدة.
+        </div>
+      </div>
+
+      <!-- بطاقة 3: ربط حساب سحابة Hik-Connect (EZVIZ OpenAPI) -->
+      <div class="settings-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:8px;">
+          <h3 style="border:none; padding:0; display:flex; align-items:center; gap:7px;">
+            <svg class="ico" style="color:var(--accent-primary);" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            <span>ربط حساب سحابة Hik-Connect (EZVIZ OpenAPI)</span>
+          </h3>
+          <span id="hikSettingsStatusBadge" class="preview-mini-tag" style="color:var(--status-warning); border-color:rgba(245,158,11,0.3);">غير مفعّل</span>
+        </div>
+
+        <div class="setting-row" style="flex-direction:column; align-items:flex-start; gap:5px;">
+          <label for="hik_api_url" style="font-size:11px; color:var(--text-muted);">بوابة الخدمة السحابية (API Gateway):</label>
+          <input type="text" id="hik_api_url" class="cfg-input mono" value="https://open.ezvizlife.com" />
+        </div>
+
+        <div class="setting-row" style="flex-direction:column; align-items:flex-start; gap:5px;">
+          <label for="hik_app_key" style="font-size:11px; color:var(--text-muted);">مفتاح المطور (AppKey):</label>
+          <input type="text" id="hik_app_key" class="cfg-input mono" placeholder="أدخل AppKey من بوابة مطوري هيكفجن..." />
+        </div>
+
+        <div class="setting-row" style="flex-direction:column; align-items:flex-start; gap:5px;">
+          <label for="hik_app_secret" style="font-size:11px; color:var(--text-muted);">الرمز السري (AppSecret):</label>
+          <input type="password" id="hik_app_secret" class="cfg-input mono" placeholder="••••••••••••••••" />
+        </div>
+
+        <div style="padding:6px 8px; background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); font-size:11px; color:var(--status-warning); line-height:1.45;">
+          ⚠ <strong>ملاحظة هامة:</strong> ربط السحابة يتطلب حساب مطوّر <strong>EZVIZ / Hik-Partner OpenAPI</strong> (AppKey + AppSecret)، وحساب Hik-Connect الشخصي العادي غير مدعوم برمجياً من هيكفجن. <strong>الطريقة المقترحة والمباشرة هي ربط ISAPI المحلي</strong> (فحص القنوات + مستمع أحداث <span class="mono">alertStream</span> المدمج).
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-top:6px; gap:8px;">
+          <span id="hikSyncStatus" style="font-size:11px; color:var(--text-muted);">الكاميرات المحلية تعمل عبر ISAPI/RTSP و alertStream</span>
+          <button class="btn-tool primary" onclick="syncCloudOpenApi()" title="استيراد الكاميرات سحابياً" aria-label="جلب الكاميرات من Hik-Connect">جلب الكاميرات سحابياً ☁</button>
+        </div>
+      </div>
+
+      <!-- بطاقة 4: محرك الرؤية والنظام والتخزين -->
+      <div class="settings-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:8px;">
+          <h3 style="border:none; padding:0;">إعدادات محرك الرؤية والنظام</h3>
+          <span id="aiSettingsBadge" class="preview-mini-tag">بانتظار الاختبار</span>
+        </div>
+
+        <div class="setting-row">
+          <label for="ai_provider">مزود الذكاء الاصطناعي:</label>
+          <select id="ai_provider" class="cfg-input" style="width:60%;" onchange="onProviderChange(false)">
+            <optgroup label="سحابي">
+              <option value="gemini">Google Gemini (مباشر)</option>
+              <option value="openai">OpenAI (GPT)</option>
+              <option value="openrouter">OpenRouter (مئات الموديلات: Claude وGPT وGemini وQwen...)</option>
+              <option value="groq">Groq</option>
+              <option value="mistral">Mistral</option>
+              <option value="xai">xAI (Grok)</option>
+              <option value="together">Together AI</option>
+              <option value="dashscope">Qwen (Alibaba DashScope)</option>
+              <option value="deepseek_custom">DeepSeek</option>
+            </optgroup>
+            <optgroup label="محلي على جهازك">
+              <option value="ollama">Ollama</option>
+              <option value="lmstudio">LM Studio</option>
+            </optgroup>
+            <optgroup label="أي مزود ثاني">
+              <option value="custom_openai">رابط مخصص متوافق مع OpenAI</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div id="universal_group">
+          <div class="setting-row">
+            <label for="universal_base_url">رابط API:</label>
+            <input type="text" id="universal_base_url" class="cfg-input mono" style="width:65%;" />
+          </div>
+          <div class="setting-row">
+            <label for="universal_api_key">مفتاح API:</label>
+            <input type="password" id="universal_api_key" class="cfg-input mono" style="width:65%;" placeholder="sk-..." />
+          </div>
+          <div class="setting-row">
+            <label for="universal_model">اسم النموذج:</label>
+            <input type="text" id="universal_model" class="cfg-input mono" style="width:65%;" list="aiModelList" placeholder="اضغط «جلب الموديلات» واختر" />
+          </div>
+        </div>
+
+        <div id="gemini_group" style="display:none;">
+          <div class="setting-row">
+            <label for="gemini_api_key">مفتاح Gemini:</label>
+            <input type="password" id="gemini_api_key" class="cfg-input mono" style="width:65%;" />
+          </div>
+          <div class="setting-row">
+            <label for="gemini_model">نموذج Gemini:</label>
+            <input type="text" id="gemini_model" class="cfg-input mono" style="width:65%;" value="gemini-2.5-flash" list="aiModelList" />
+          </div>
+        </div>
+
+        <div id="ollama_group" style="display:none;">
+          <div class="setting-row">
+            <label for="ollama_url">رابط Ollama:</label>
+            <input type="text" id="ollama_url" class="cfg-input mono" style="width:65%;" value="http://127.0.0.1:11434" />
+          </div>
+          <div class="setting-row">
+            <label for="ollama_model">نموذج Ollama:</label>
+            <input type="text" id="ollama_model" class="cfg-input mono" style="width:65%;" value="llava" list="aiModelList" />
+          </div>
+        </div>
+
+        <!-- v16 #R13: جلب الموديلات المتاحة فعلاً لمفتاحك -->
+        <datalist id="aiModelList"></datalist>
+        <div class="setting-row">
+          <span id="aiModelsInfo" style="font-size:12px; color:var(--text-muted);">اختر المزود وحط المفتاح، بعدها اجلب الموديلات المتاحة</span>
+          <button type="button" class="btn-tool" onclick="fetchAiModels(this)">جلب الموديلات المتاحة</button>
+        </div>
+
+        <div class="setting-row">
+          <label for="motion_sensitivity">حساسية الحركة / مهلة التهدئة (ث):</label>
+          <div style="display:flex; gap:6px; width:65%;">
+            <input type="number" id="motion_sensitivity" class="cfg-input mono" value="28" title="حساسية الحركة" />
+            <input type="number" id="cooldown_seconds" class="cfg-input mono" value="10" title="مهلة التهدئة بالثواني" />
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <label for="live_fps">فريمات العرض (live_fps) / الكشف (detect_fps):</label>
+          <div style="display:flex; gap:6px; width:65%;">
+            <input type="number" id="live_fps" class="cfg-input mono" value="15" min="1" max="30" title="معدل فريمات العرض المباشر" />
+            <input type="number" id="detect_fps" class="cfg-input mono" value="8" min="1" max="25" title="معدل فريمات الكشف" />
+          </div>
+        </div>
+
+        <input type="hidden" id="power_mode" value="max" />
+        <input type="hidden" id="jpeg_quality" value="96" />
+        <input type="hidden" id="custom_rules" value="" />
+        <input type="hidden" id="live_max_width" value="1280" />
+        <input type="hidden" id="live_jpeg_quality" value="75" />
+        <!-- v16 #R16: البث المباشر عالي الدقة ودقة مقاطع الأحداث -->
+        <div class="setting-row">
+          <label for="go2rtc_enabled">البث المباشر عالي الدقة (go2rtc):</label>
+          <div style="display:flex; gap:6px; width:65%; align-items:center;">
+            <select id="go2rtc_enabled" class="cfg-input">
+              <option value="true">مفعّل (MSE بدقة الكاميرا، حسب دعم الترميز)</option>
+              <option value="false">معطّل (بث MJPEG العادي)</option>
+            </select>
+            <span id="go2rtcStatusTxt" class="preview-mini-tag">--</span>
+          </div>
+        </div>
+        <input type="hidden" id="go2rtc_url" value="http://127.0.0.1:1985" />
+        <div class="setting-row">
+          <label for="clip_max_width" title="تسجيل FFmpeg يحتفظ بدقة المصدر؛ هذا الخيار للمسار الاحتياطي فقط">دقة المقطع الاحتياطي:</label>
+          <select id="clip_max_width" class="cfg-input" style="width:65%;">
+            <option value="1920">1080p (1920×1080) — الأوضح</option>
+            <option value="1280">720p (1280×720)</option>
+            <option value="640">360p (أصغر حجماً)</option>
+          </select>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-top:6px; gap:8px;">
+          <span id="apiTestBox" style="font-size:11px; color:var(--text-muted);">افحص الرؤية للتأكد من قراءة الصور فعلياً</span>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-tool" onclick="saveGlobalConfig(true)">حفظ الإعدادات</button>
+            <button class="btn-tool primary" onclick="testAiApi()">فحص الرؤية الآن</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- بطاقة 5: مزودات الإشعارات الإضافية (ntfy, SMTP Email, Discord, WhatsApp) -->
+      <div class="settings-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:8px;">
+          <h3 style="border:none; padding:0;">مزودات الإشعارات الإضافية (ntfy / SMTP / Discord / WhatsApp)</h3>
+          <span id="extNotifyStatus" class="preview-mini-tag">متعدد القنوات</span>
+        </div>
+
+        <div class="setting-row" style="gap:6px;">
+          <label><input type="checkbox" id="ntfy_enabled" /> <strong>ntfy</strong></label>
+          <input type="text" id="ntfy_server_url" class="cfg-input mono" style="width:32%;" placeholder="https://ntfy.sh" value="https://ntfy.sh" />
+          <input type="text" id="ntfy_topic" class="cfg-input mono" style="width:24%;" placeholder="topic" />
+          <input type="password" id="ntfy_token" class="cfg-input mono" style="width:20%;" placeholder="Token (اختياري)" />
+          <button class="btn-tool" onclick="testNotifierChannel('ntfy', this)">تجربة</button>
+        </div>
+
+        <div class="setting-row" style="gap:6px;">
+          <label><input type="checkbox" id="discord_enabled" /> <strong>Discord</strong></label>
+          <input type="password" id="discord_webhook_url" class="cfg-input mono" style="width:68%;" placeholder="https://discord.com/api/webhooks/..." />
+          <button class="btn-tool" onclick="testNotifierChannel('discord', this)">تجربة</button>
+        </div>
+
+        <div class="setting-row" style="gap:6px; flex-wrap:wrap;">
+          <label><input type="checkbox" id="smtp_enabled" /> <strong>SMTP TLS</strong></label>
+          <input type="text" id="smtp_host" class="cfg-input mono" style="width:24%;" placeholder="smtp.gmail.com" />
+          <input type="number" id="smtp_port" class="cfg-input mono" style="width:14%;" value="587" />
+          <input type="text" id="smtp_username" class="cfg-input mono" style="width:22%;" placeholder="المستخدم" />
+          <input type="password" id="smtp_password" class="cfg-input mono" style="width:20%;" placeholder="كلمة المرور" />
+          <input type="text" id="smtp_to_addrs" class="cfg-input mono" style="width:65%; margin-top:4px;" placeholder="المستلم (to@example.com)" />
+          <button class="btn-tool" style="margin-top:4px;" onclick="testNotifierChannel('smtp', this)">تجربة</button>
+        </div>
+
+        <div class="setting-row" style="gap:6px; flex-wrap:wrap;">
+          <label><input type="checkbox" id="wa_enabled" /> <strong>WhatsApp</strong></label>
+          <select id="wa_mode" class="cfg-input" style="width:22%;">
+            <option value="callmebot">CallMeBot</option>
+            <option value="cloud_api">Cloud API</option>
+          </select>
+          <input type="text" id="wa_phone" class="cfg-input mono" style="width:24%;" placeholder="+9665..." />
+          <input type="password" id="wa_apikey" class="cfg-input mono" style="width:26%;" placeholder="API Key / Token" />
+          <input type="text" id="wa_phone_id" class="cfg-input mono" style="width:35%; margin-top:4px;" placeholder="Phone Number ID (لـ Cloud API)" />
+          <button class="btn-tool" style="margin-top:4px;" onclick="testNotifierChannel('whatsapp', this)">تجربة</button>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding-top:4px;">
+          <span id="notifierTestMsg" style="font-size:11px; color:var(--text-muted);">جميع المفاتيح محمية بـ SECRET_MASK</span>
+          <button class="btn-tool primary" onclick="saveGlobalConfig(true)">حفظ إعدادات الإشعارات</button>
+        </div>
+      </div>
+
+      <!-- بطاقة 6: إدارة التخزين المحلي والتخزين السحابي (S3 / rclone) -->
+      <div class="settings-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-subtle); padding-bottom:8px;">
+          <h3 style="border:none; padding:0;">إدارة التخزين المحلي والسحابي (Storage & Cloud)</h3>
+          <button class="btn-tool" onclick="refreshStorageStats()">تحديث الإحصائيات ↻</button>
+        </div>
+
+        <div id="storageStatsBox" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:6px; font-size:11px; background:var(--bg-surface-2); padding:8px; border-radius:var(--radius-sm); border:1px solid var(--border-subtle);">
+          <div>الصور: <strong id="stSnapMb" class="mono">0 MB</strong></div>
+          <div>المقاطع: <strong id="stClipMb" class="mono">0 MB</strong></div>
+          <div>اللوحات: <strong id="stPlateMb" class="mono">0 MB</strong></div>
+          <div>الأحداث: <strong id="stEvCount" class="mono">0</strong></div>
+          <div>المساحة الحرة: <strong id="stFreeGb" class="mono">-- GB</strong></div>
+          <div>الأقدم/الأحدث: <span id="stEvRange" class="mono" style="font-size:10px;">--</span></div>
+        </div>
+
+        <div class="setting-row" style="gap:6px;">
+          <label>الاحتفاظ (أيام) / الحد الأقصى (MB):</label>
+          <div style="display:flex; gap:6px; width:58%;">
+            <input type="number" id="retention_days" class="cfg-input mono" value="7" min="1" max="365" />
+            <input type="number" id="max_storage_mb" class="cfg-input mono" value="2000" min="100" max="500000" />
+          </div>
+        </div>
+        <div style="font-size:11px; color:var(--text-muted); line-height:1.6;">
+          الحذف يبدأ عند تجاوز الحد الأقصى بالميجابايت حتى لو لم تنتهِ أيام الاحتفاظ. مقطع 1080p ≈ 3 MB ومقطع 4K ≈ 12 MB، فحد 2000 MB يكفي تقريباً 160 إلى 600 مقطع فقط.
+        </div>
+
+        <div class="setting-row" style="gap:6px; flex-wrap:wrap;">
+          <button class="btn-tool" onclick="openStorageClearConfirm('events_only')">مسح الإشعارات فقط</button>
+          <button class="btn-tool" style="color:var(--status-danger);" onclick="openStorageClearConfirm('all')">مسح الإشعارات والملفات</button>
+          <div style="display:flex; gap:4px; align-items:center;">
+            <button class="btn-tool" onclick="openStorageClearConfirm('older_than')">مسح أقدم من</button>
+            <input type="number" id="clearOlderDaysInput" class="cfg-input mono" value="7" min="1" max="365" style="width:52px; height:26px;" />
+            <span style="font-size:11px;">يوم</span>
+          </div>
+        </div>
+
+        <!-- نافذة التأكيد المشروطة بكتابة كلمة "حذف" -->
+        <div id="storageConfirmModal" style="display:none; background:rgba(239,68,68,0.08); border:1px solid var(--status-danger); border-radius:var(--radius-sm); padding:8px; flex-direction:column; gap:6px;">
+          <div id="storageConfirmSummary" style="font-size:11.5px; color:var(--text-primary); font-weight:600;"></div>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <input type="text" id="storageConfirmInput" class="cfg-input" placeholder="اكتب كلمة «حذف» للتأكيد..." style="flex:1;" />
+            <button class="btn-tool primary" style="background:var(--status-danger); border-color:var(--status-danger);" onclick="executeConfirmedStorageClear()">تأكيد الحذف</button>
+            <button class="btn-tool" onclick="document.getElementById('storageConfirmModal').style.display='none'">إلغاء</button>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--border-subtle); padding-top:6px; margin-top:2px; display:flex; flex-direction:column; gap:5px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <label style="font-size:11.5px; font-weight:600;"><input type="checkbox" id="cloud_enabled" /> تفعيل الرفع السحابي التلقائي (S3 / R2 / B2 / MinIO / rclone)</label>
+            <label style="font-size:11px;"><input type="checkbox" id="cloud_confirmed_only" checked /> المؤكدة فقط</label>
+          </div>
+          <div style="display:flex; gap:5px; flex-wrap:wrap;">
+            <select id="cloud_provider" class="cfg-input" style="width:22%;">
+              <option value="s3">S3 Compatible</option>
+              <option value="rclone">rclone Remote</option>
+            </select>
+            <input type="text" id="s3_endpoint" class="cfg-input mono" style="width:38%;" placeholder="S3 Endpoint URL" />
+            <input type="text" id="s3_bucket" class="cfg-input mono" style="width:34%;" placeholder="Bucket / rclone remote" />
+            <input type="password" id="s3_access_key" class="cfg-input mono" style="width:32%;" placeholder="Access Key" />
+            <input type="password" id="s3_secret_key" class="cfg-input mono" style="width:32%;" placeholder="Secret Key" />
+            <input type="text" id="s3_prefix" class="cfg-input mono" style="width:30%;" value="cctv_events" placeholder="Prefix" />
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="/static/app.js?v={{ v }}"></script>
+<script src="/static/v18.js?v={{ v }}"></script>
+</body>
+</html>
