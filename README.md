@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/33596751/README.md)
 # CAMRA-ON-EYE 👁️
 ### Hikvision AI Intelligent Surveillance & Security Matrix (V18.1)
 

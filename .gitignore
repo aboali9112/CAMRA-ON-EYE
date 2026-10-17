@@ -1,0 +1,41 @@
+# ==========================================
+# CAMRA-ON-EYE - Git Ignore Rules
+# ==========================================
+
+# Data, Recordings and Snapshots
+cctv_v18_data/
+preview_data/
+cctv_agent_data/
+recordings/
+snapshots/
+clips/
+plates/
+*.mp4
+*.avi
+*.mkv
+*.jpg
+*.jpeg
+*.png
+*.log
+*.pid
+
+# Private Configuration and Credentials
+config.json
+.env
+
+# Large Binary Executables (Exceeds GitHub limits)
+bin/
+*.exe
+
+# Large YOLO Model Weights (Downloaded automatically)
+*.pt
+*.onnx
+
+# Python Cache & Testing
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.pytest_tmp/
+.venv/
+env/
